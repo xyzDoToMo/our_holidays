@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained(‘users’);
             $table->foreignId('category_id')->constrained(‘categories’);
-            $table->text('title');
+            $table->string('title');
             $table->text('body');
-            $table->text('event_title');
+            $table->string('event_title');
             $table->text('event_body');
             $table->dateTime('event_time');
             $table->timestamps();
