@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained(‘users’);
             $table->foreignId('category_id')->constrained(‘categories’);
-            $table->string('title');
-            $table->string('body');
-            $table->string('event_title');
-            $table->string('event_body');
-            $table->string('event_time');
+            $table->text('title');
+            $table->text('body');
+            $table->text('event_title');
+            $table->text('event_body');
+            $table->dateTime('event_time');
             $table->timestamps();
             $table->softDeletes();
         });

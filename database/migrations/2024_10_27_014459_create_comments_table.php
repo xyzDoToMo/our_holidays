@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            
-            $table->id();
             $table->foreignId('user_id')->constrained(‘users’);
             $table->foreignId('review_id')->constrained(‘reviews’);
-            $table->string('body');
+            $table->text('body');
             $table->timestamps();
             $table->softDeletes();
         });
