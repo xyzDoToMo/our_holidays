@@ -5,6 +5,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::get('/reviews', [ReviewController::class, 'index']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/likes', [LikeController::class, 'index']);
+Route::get('/followers', [FollowerController::class, 'index']);
