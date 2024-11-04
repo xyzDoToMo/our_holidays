@@ -27,3 +27,5 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/likes', [LikeController::class, 'index']);
 Route::get('/followers', [FollowerController::class, 'index']);
+
+Route::get('/', [CategoryController::class, 'index']);
