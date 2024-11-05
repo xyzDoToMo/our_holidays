@@ -31,3 +31,4 @@ Route::get('/followers', [FollowerController::class, 'index']);
 Route::get('/', [CategoryController::class, 'index']);
 Route::get('/', [CommentController::class, 'index']);
 Route::get('/', [FollowerController::class, 'index']);
+Route::get('/', [LikeController::class, 'index']);

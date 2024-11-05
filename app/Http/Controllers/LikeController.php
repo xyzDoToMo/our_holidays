@@ -10,6 +10,6 @@ class LikeController extends Controller
     //
     public function index(Like $like)
     {
-        return $like->get();
+        return view('likes.index')->with(['likes' => $like->get()]);  
     }
 }
