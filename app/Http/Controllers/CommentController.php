@@ -10,7 +10,7 @@ class CommentController extends Controller
     //
     public function index(Comment $comment)
     {
-        return $comment->get();
+        return view('comments.index')->with(['comments' => $comment->get()]);  
     }
 }
 

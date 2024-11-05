@@ -29,3 +29,4 @@ Route::get('/likes', [LikeController::class, 'index']);
 Route::get('/followers', [FollowerController::class, 'index']);
 
 Route::get('/', [CategoryController::class, 'index']);
+Route::get('/', [CommentController::class, 'index']);
