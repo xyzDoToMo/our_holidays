@@ -10,6 +10,6 @@ class ReviewController extends Controller
     //
     public function index(Review $review)//インポートしたReviewをインスタンス化して$reviewとして使用。
     {
-        return $review->get();//$postの中身を戻り値にする。
+        return view('reviews.index')->with(['reviews' => $review->get()]);  
     }
 }
