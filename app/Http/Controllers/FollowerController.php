@@ -10,6 +10,6 @@ class FollowerController extends Controller
     //
     public function index(Follower $follower)
     {
-        return $follower->get();
+        return view('followers.index')->with(['followers' => $follower->get()]);  
     }
 }
