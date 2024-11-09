@@ -11,10 +11,18 @@
         <div class='review'>
             @foreach($reviews as $review)
                 <div class='review'>
-                    <h2 class='title'>{{ $review->title }}</h2>
-                    <h2 class='body'>{{ $review->body }}</h2>
-                    <h2 class='event_title'>{{ $review->event_title }}</h2>
-                    <h2 class='event_body'>{{ $review->event_body }}</h2>
+                    <h2 class='title'>
+                        <a href="/reviews/{{ $review->id }}">{{ $review->title }}</a>
+                    </h2>
+                    <h2 class='body'>
+                        <a href="/reviews/{{ $review->id }}">{{ $review->body }}</a>
+                    </h2>
+                    <h2 class='event_title'>
+                        <a href="/reviews/{{ $review->id }}">{{ $review->event_title }}</a>
+                    </h2>
+                    <h2 class='event_body'>
+                        <a href="/reviews/{{ $review->id }}">{{ $review->event_body }}</a>
+                    </h2>
                 </div>
             @endforeach
         </div>
