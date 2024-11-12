@@ -34,5 +34,7 @@ Route::get('/', [FollowerController::class, 'index']);
 Route::get('/', [LikeController::class, 'index']);
 Route::get('/', [ReviewController::class, 'index']);
 
+Route::get('/reviews/create', [ReviewController::class, 'create']);
 Route::get('/reviews/{review}', [ReviewController::class ,'show']);
 // '/posts/{対象データのID}'にGetリクエストが来たら、PostControllerのshowメソッドを実行する
+Route::post('/reviews', [ReviewController::class, 'store']);

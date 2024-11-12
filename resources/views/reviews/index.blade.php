@@ -7,6 +7,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
+        <a href='/reviews/create'>create</a>
         <h1>Review</h1>
         <div class='review'>
             @foreach($reviews as $review)
@@ -14,15 +15,12 @@
                     <h2 class='title'>
                         <a href="/reviews/{{ $review->id }}">{{ $review->title }}</a>
                     </h2>
-                    <h2 class='body'>
-                        <a href="/reviews/{{ $review->id }}">{{ $review->body }}</a>
-                    </h2>
-                    <h2 class='event_title'>
-                        <a href="/reviews/{{ $review->id }}">{{ $review->event_title }}</a>
-                    </h2>
-                    <h2 class='event_body'>
-                        <a href="/reviews/{{ $review->id }}">{{ $review->event_body }}</a>
-                    </h2>
+                        <p class='user_id'>{{ $review->user_id }}</p>
+                        <p class='category'>{{ $review->category->name }}</p>
+                        <p class='body'>{{ $review->body }}</p>
+                        <p class='event_title'>{{ $review->event_title }}</p>
+                        <p class='event_body'>{{ $review->event_body }}</p>
+                        <p class='event_time'>{{ $review->event_time }}</p>
                 </div>
             @endforeach
         </div>

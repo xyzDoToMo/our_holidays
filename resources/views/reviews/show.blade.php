@@ -15,6 +15,8 @@
             <div class="content__review">
                 <h3>content</h3>
                 <p>{{ $review->body }}</p>    
+                <p>{{ $review->event_title }}</p>    
+                <p>{{ $review->event_body }}</p>    
             </div>
         </div>
         <div class="footer">
