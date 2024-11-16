@@ -16,10 +16,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="user_id">
-                <h2>User_id</h2>
-                <input type="text" name="review[user_id]" placeholder="ユーザー"/>
-            </div>
             <div class="title">
                 <h2>Event Title</h2>
                 <input type="text" name="review[title]" placeholder="イベント"/>

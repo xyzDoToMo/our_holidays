@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->string('title');
             $table->text('body');
-            $table->string('event_title');
-            $table->text('event_body');
-            $table->dateTime('event_time');
+            $table->string('event_title')->nullable();
+            $table->text('event_body')->nullable();
+            $table->dateTime('event_time')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

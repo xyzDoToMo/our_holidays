@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Review;
+use App\Http\Requests\ReviewRequest; // useする
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
 
 class ReviewController extends Controller
 {
@@ -28,9 +30,10 @@ class ReviewController extends Controller
     {
         return view('reviews.create')->with(['categories' => $category->get()]);
     }
-    public function store(Request $request, Review $review)
+    public function store(Review $review, ReviewRequest $request) // 引数をRequestからReviewRequestにする
     {
         $input = $request['review'];
+        $input['user_id'] = Auth::user()->id;
         $review->fill($input)->save();
         return redirect('/reviews/' . $review->id);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
@@ -18,23 +19,14 @@ use App\Http\Controllers\FollowerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::controller(ReviewController::class)->middleware(['auth'])->group(function(){
+    Route::get('/reviews', 'index')->name('index');
+    Route::post('/reviews', 'store')->name('store');
+    Route::get('/reviews/create', 'create')->name('create');
+    Route::get('/reviews/{review}', 'show')->name('show');
+    Route::put('/reviews/{review}', 'update')->name('update');
+    Route::delete('/reviews/{review}', 'delete')->name('delete');
+    Route::get('/reviews/{review}/edit', 'edit')->name('edit');
 });
-
-Route::get('/reviews', [ReviewController::class, 'index']);
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/comments', [CommentController::class, 'index']);
-Route::get('/likes', [LikeController::class, 'index']);
-Route::get('/followers', [FollowerController::class, 'index']);
-
-Route::get('/', [CategoryController::class, 'index']);
-Route::get('/', [CommentController::class, 'index']);
-Route::get('/', [FollowerController::class, 'index']);
-Route::get('/', [LikeController::class, 'index']);
-Route::get('/', [ReviewController::class, 'index']);
-
-Route::get('/reviews/create', [ReviewController::class, 'create']);
-Route::get('/reviews/{review}', [ReviewController::class ,'show']);
-// '/posts/{対象データのID}'にGetリクエストが来たら、PostControllerのshowメソッドを実行する
-Route::post('/reviews', [ReviewController::class, 'store']);
+require __DIR__.'/auth.php';
