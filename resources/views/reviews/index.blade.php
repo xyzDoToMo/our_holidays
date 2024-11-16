@@ -21,6 +21,19 @@
                         <p class='event_title'>{{ $review->event_title }}</p>
                         <p class='event_body'>{{ $review->event_body }}</p>
                         <p class='event_time'>{{ $review->event_time }}</p>
+                        <form action="/reviews/{{ $review->id }}" id="form_{{ $review->id }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                            <button type="button" onclick="deleteReview({{ $review->id }})">delete</button> 
+                        </form>
+                        <script>
+                            function deleteReview(id) {
+                                'use strict'
+                                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                                document.getElementById(`form_${id}`).submit();
+                                }
+                            }
+                        </script>
                 </div>
             @endforeach
         </div>

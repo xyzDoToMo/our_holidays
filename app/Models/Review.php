@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'category_id',
         'user_id',
@@ -18,5 +19,8 @@ class Review extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    use HasFactory;
+    public function comments()   
+    {
+        return $this->hasMany(Comment::class);  
+    }
 }

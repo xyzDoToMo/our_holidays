@@ -21,12 +21,18 @@ use App\Http\Controllers\FollowerController;
 
 
 Route::controller(ReviewController::class)->middleware(['auth'])->group(function(){
-    Route::get('/reviews', 'index')->name('index');
+    Route::get('/', 'index')->name('index');
     Route::post('/reviews', 'store')->name('store');
     Route::get('/reviews/create', 'create')->name('create');
     Route::get('/reviews/{review}', 'show')->name('show');
+    Route::get('/reviews/{review}/edit', 'edit')->name('edit');
     Route::put('/reviews/{review}', 'update')->name('update');
     Route::delete('/reviews/{review}', 'delete')->name('delete');
-    Route::get('/reviews/{review}/edit', 'edit')->name('edit');
+});
+Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
+    Route::post('/reviews/{review}/comments', 'store')->name('comments.store');
+    Route::get('/reviews/{review}/comments/{comment}/edit', 'edit')->name('comments.edit');
+    Route::put('/reviews/{review}/comments/{comment}', 'update')->name('comments.update');
+    Route::delete('/reviews/{review}/comments/{comment}', 'delete')->name('comments.delete');
 });
 require __DIR__.'/auth.php';
