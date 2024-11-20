@@ -18,7 +18,6 @@ class ReviewController extends Controller
 
 /**
  * 特定IDのpostを表示する
- *
  * @params Object Post // 引数の$postはid=1のPostインスタンス
  * @return Reposnse review view
  */
@@ -54,5 +53,35 @@ class ReviewController extends Controller
     {
         $review->delete();
         return redirect('/');
+    }
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified'])->only(['like', 'unlike']);
+    }
+/**
+  * 引数のIDに紐づくレビューにLIKEする
+  * @param $id レビューID
+  * @return \Illuminate\Http\RedirectResponse
+  */
+    public function like($id)
+    {
+        Like::create([
+            'review_id' => $id,
+            'user_id' => Auth::id(),
+        ]);
+        session()->flash('success', 'You Liked the Review.');
+        return redirect()->back();
+    }
+/**
+   * 引数のIDに紐づくリプライにUNLIKEする
+   * @param $id リプライID
+   * @return \Illuminate\Http\RedirectResponse
+   */
+    public function unlike($id)
+    {
+        $like = Like::where('review_id', $id)->where('user_id', Auth::id())->first();
+        $like->delete();
+        session()->flash('success', 'You Unliked the Review.');
+        return redirect()->back();
     }
 }

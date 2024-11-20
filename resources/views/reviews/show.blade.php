@@ -36,6 +36,25 @@
                 <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
             </form>
         @endforeach
+        <div>
+            @if(auth()->user()->likedReviews()->where('review_id', $review->id)->exists())
+            <form action="{{ route('reviews.unlike', ['review' => $review->id]) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success btn-sm">
+                    <span class="badge">{{ $review->likedByUsers()->count() }}</span>
+                    いいね解除
+                </button>
+            </form>
+            @else
+            <form action="{{ route('reviews.like', ['review' => $review->id]) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-secondary btn-sm">
+                    <span class="badge">{{ $review->likedByUsers()->count() }}</span>
+                    いいね
+                </button>
+            </form>
+            @endif
+        </div>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
