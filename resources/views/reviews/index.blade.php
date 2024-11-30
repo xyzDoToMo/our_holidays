@@ -35,5 +35,8 @@
                 </div>
                 @endforeach
             </div>
+            <div class='paginate'>
+            {{ $reviews->links() }}
+            </div>
     </body>
 </x-app-layout>
