@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     //
-    public function index(Review $review)//インポートしたReviewをインスタンス化して$reviewとして使用。
+    public function index(Review $review)
     {
-        return view('reviews.index')->with(['reviews' => $review->get()]);  
+        return view('reviews.index')->with(['reviews' => $review->getPaginateByLimit()]);
+    //getPaginateByLimit()はPost.phpで定義したメソッドです。
     }
-
 /**
  * 特定IDのpostを表示する
  * @params Object Post // 引数の$postはid=1のPostインスタンス

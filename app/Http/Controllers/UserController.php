@@ -22,5 +22,6 @@ class UserController extends Controller
             : false;
 
         return view('users.show', compact('user', 'isFollowing'));
+
     }
 }

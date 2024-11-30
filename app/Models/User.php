@@ -73,4 +73,8 @@ class User extends Authenticatable
             'following_id'        // 中間テーブルの関連する外部キー（フォローしているユーザーのID）
         )->withTimestamps();
     }
+    public function getOwnPaginateByLimit(int $limit_count = 5)
+    {
+        return $this::with('reviews')->find(Auth::id())->reviews()->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
 }
