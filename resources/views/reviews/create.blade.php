@@ -1,9 +1,6 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>Review</title>
-    </head>
+<x-app-layout>
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold">Review</h1>
     <body>
         <h1>Event Review</h1>
         <form action="/reviews" method="POST">
@@ -29,10 +26,25 @@
                     @endforeach
                 </select>
             </div>
+            <div class="event_title">
+                <h2>where</h2>
+                <textarea name="review[event_title]" placeholder="どこでやってる(例)上野公園)">{{ old('review.event_title') }}</textarea>
+                <p class="event_title__error" style="color:red">{{ $errors->first('review.event_title') }}</p>
+            </div>
+            <div class="event_time">
+                <h2>when</h2>
+                <textarea name="review[event_time]" placeholder="期間(例）2024.10.24〜11.30)">{{ old('review.event_time') }}</textarea>
+                <p class="event_time__error" style="color:red">{{ $errors->first('review.event_time') }}</p>
+            </div>
+            <div class="event_body">
+                <h2>when</h2>
+                <textarea name="review[event_body]" placeholder="その他特記事項など(例）18歳以上限定)">{{ old('review.event_body') }}</textarea>
+                <p class="event_body__error" style="color:red">{{ $errors->first('review.event_body') }}</p>
+            </div>
             <input type="submit" value="store"/>
         </form>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
     </body>
-</html>
+</x-app-layout>

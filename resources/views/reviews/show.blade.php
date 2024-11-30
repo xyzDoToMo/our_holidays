@@ -1,12 +1,6 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Review</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    </head>
+<x-app-layout>
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold">{{ $review->title }}</h1>
     <body>
         <div class="edit"><a href="/reviews/{{ $review->id }}/edit">edit</a></div>
         <h1 class="title">
@@ -15,10 +9,14 @@
         <div class="content">
             <div class="content__review">
                 <h3>content</h3>
-                <p>{{ $review->body }}</p>    
+                <h2 class='user_id'>
+                            <a href="/users/{{ $review->user_id }}">{{ $review->user_id }}</a>
+                </h2>
+                <p>{{ $review->body }}</p>
+                <a href="">{{ $review->category->name }}</a>
                 <p>{{ $review->event_title }}</p>    
                 <p>{{ $review->event_body }}</p>
-                <a href="">{{ $review->category->name }}</a>
+                <p>{{ $review->event_time }}</p>
             </div>
         </div>
         <form action="{{ route('comments.store', ['review' => $review->id]) }}" method="POST">
@@ -59,4 +57,4 @@
             <a href="/">戻る</a>
         </div>
     </body>
-</html>
+</x-app-layout>
