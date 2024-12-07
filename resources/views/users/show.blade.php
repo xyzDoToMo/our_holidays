@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold">{{ $user->name }} の詳細</h1>
+        <h1 class="text-2xl font-bold">{{ $user ? $user->name : 'ユーザー不明' }} の投稿</h1>
+        
         @auth
-            {{-- ログインユーザーが他のユーザーの場合のみフォローボタンを表示 --}}
-            @if (auth()->id() !== $user->id)
+            @if ($user && auth()->id() !== $user->id)
                 <form 
                     action="{{ $isFollowing ? route('user.unfollow', ['user' => $user]) : route('user.follow', ['user' => $user]) }}" 
                     method="POST" 
@@ -15,17 +15,20 @@
                 </form>
             @endif
         @endauth
-    </div>
-    <div class="own_reviews">
-        @foreach($own_reviews as $review)
-            <div>
-                <h4><a href="/reviews/{{ $review->id }}">{{ $review->title }}</a></h4>
-                <small>{{ $review->user->name }}</small>
-                <p>{{ $review->body }</p>
+
+        @if($own_reviews && $own_reviews->count())
+            @foreach($own_reviews as $review)
+                <div class box>
+                    <h4><a href="/reviews/{{ $review->id }}">{{ $review->title }}</a></h4>
+                    <small>{{ $review->user ? $review->user->name : 'ユーザーなし' }}</small>
+                    <p>{{ $review->body }}</p>
+                </div>
+            @endforeach
+            <div class='paginate'>
+                {{ $own_reviews->links() }}
             </div>
-        @endforeach
-        <div class='paginate'>
-            {{ $own_reviews->links() }}
-        </div>
+        @else
+            <p>レビューがありません。</p>
+        @endif
     </div>
 </x-app-layout>
