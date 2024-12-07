@@ -4,8 +4,7 @@
         
         @auth
             @if ($user && auth()->id() !== $user->id)
-                <form 
-                    action="{{ $isFollowing ? route('user.unfollow', ['user' => $user]) : route('user.follow', ['user' => $user]) }}" 
+                <form action="{{ $isFollowing ? route('user.unfollow', ['user' => $user]) : route('user.follow', ['user' => $user]) }}" 
                     method="POST" 
                     class="mt-4">
                     @csrf
@@ -18,7 +17,7 @@
 
         @if($own_reviews && $own_reviews->count())
             @foreach($own_reviews as $review)
-                <div class box>
+                <div class="box">
                     <h4><a href="/reviews/{{ $review->id }}">{{ $review->title }}</a></h4>
                     <small>{{ $review->user ? $review->user->name : 'ユーザーなし' }}</small>
                     <p>{{ $review->body }}</p>
