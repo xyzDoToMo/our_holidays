@@ -1,7 +1,13 @@
 <x-app-layout>
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold">{{ $user ? $user->name : 'ユーザー不明' }} の投稿</h1>
-        
+
+        <!-- フォロワー数とフォロー数の表示 -->
+        <div class="mt-4">
+            <p><strong>フォロワー数:</strong> {{ $followersCount }}</p>
+            <p><strong>フォロー数:</strong> {{ $followingCount }}</p>
+        </div>
+
         @auth
             @if ($user && auth()->id() !== $user->id)
                 <form action="{{ $isFollowing ? route('user.unfollow', ['user' => $user]) : route('user.follow', ['user' => $user]) }}" 

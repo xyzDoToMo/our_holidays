@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -44,10 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
     public function likedReviews()
     {
         return $this->belongsToMany(Review::class, 'likes');
     }
+
     /**
      * フォローしているユーザー（followingリレーション）
      */
@@ -73,12 +74,33 @@ class User extends Authenticatable
             'following_id'        // 中間テーブルの関連する外部キー（フォローしているユーザーのID）
         )->withTimestamps();
     }
+
     public function review()
     {
         return $this->belongsTo(Review::class);
     }
+
+    /**
+     * ユーザーが持つレビューの取得（ページネーション）
+     */
     public function getOwnPaginateByLimit(int $limit_count = 5)
     {
         return $this::with('reviews')->find(Auth::id())->review()->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+
+    /**
+     * フォロワー数を取得
+     */
+    public function getFollowersCount()
+    {
+        return $this->followers()->count();
+    }
+
+    /**
+     * フォロー数を取得
+     */
+    public function getFollowingCount()
+    {
+        return $this->following()->count();
     }
 }
