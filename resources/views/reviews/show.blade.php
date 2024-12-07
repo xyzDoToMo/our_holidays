@@ -53,7 +53,7 @@
             </form>
             @endif
         </div>
-        <div class="footer">
+        <div class box ="footer">
             <a href="/">戻る</a>
         </div>
     </body>

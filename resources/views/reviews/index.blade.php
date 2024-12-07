@@ -11,7 +11,7 @@
                             <a href="/reviews/{{ $review->id }}">{{ $review->title }}</a>
                         </h2>
                         <h2 class='user_id'>
-                            <a href="/users/{{ $review->user_id }}">{{ $review->user_id }}</a>
+                            <a href="/users/{{ $review->user_id }}">ユーザーID:{{ $review->user_id }}</a>
                         </h2>
                             <p class='category'>{{ $review->category->name }}</p>
                             <p class='body'>{{ $review->body }}</p>
