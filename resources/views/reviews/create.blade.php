@@ -1,8 +1,7 @@
 <x-app-layout>
-    <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Review</h1>
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Event Review</h2>
-        <form action="/reviews" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="container mx-auto p-4 bg-neutral-100 min-h-screen">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create a Review</h1>
+        <form action="/reviews" method="POST" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-8 max-w-2xl mx-auto">
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -18,6 +17,7 @@
                 />
                 <p class="text-red-500 text-xs italic">{{ $errors->first('review.title') }}</p>
             </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="body">
                     Contents
@@ -29,6 +29,7 @@
                     placeholder="どんなイベント">{{ old('review.body') }}</textarea>
                 <p class="text-red-500 text-xs italic">{{ $errors->first('review.body') }}</p>
             </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
                     Category
@@ -37,14 +38,17 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                     id="category" 
                     name="review[category_id]">
+                    <option value="" disabled {{ old('review.category_id') ? '' : 'selected' }}>Select a Category</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}"
+                        <option value="{{ $category->id }}" 
                             {{ old('review.category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
+                <p class="text-red-500 text-xs italic">{{ $errors->first('review.category_id') }}</p>
             </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="event_title">
                     Where
@@ -56,6 +60,7 @@
                     placeholder="どこでやってる(例)上野公園)">{{ old('review.event_title') }}</textarea>
                 <p class="text-red-500 text-xs italic">{{ $errors->first('review.event_title') }}</p>
             </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="event_time">
                     When
@@ -67,6 +72,7 @@
                     placeholder="期間(例）2024.10.24〜11.30)">{{ old('review.event_time') }}</textarea>
                 <p class="text-red-500 text-xs italic">{{ $errors->first('review.event_time') }}</p>
             </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="event_body">
                     Notes
@@ -78,6 +84,7 @@
                     placeholder="その他特記事項など(例）18歳以上限定)">{{ old('review.event_body') }}</textarea>
                 <p class="text-red-500 text-xs italic">{{ $errors->first('review.event_body') }}</p>
             </div>
+
             <div class="flex items-center justify-between">
                 <button 
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
@@ -93,12 +100,3 @@
         </form>
     </div>
 </x-app-layout>
-
-
-
-
-
-
-
-
-
