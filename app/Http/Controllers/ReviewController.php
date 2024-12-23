@@ -10,51 +10,56 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    public function index(Review $review)
+    // レビュー一覧
+    public function index()
     {
-        return view('reviews.index')->with(['reviews' => $review->getPaginateByLimit()]);
+        // ページネーションを追加
+        $reviews = Review::with('category') // カテゴリも一緒に取得
+                         ->paginate(6);  // ページネーションでレビューを表示
+        return view('reviews.index', compact('reviews'));
     }
 
+    // レビュー詳細
     public function show(Review $review)
     {
-        return view('reviews.show')->with(['review' => $review]);
+        return view('reviews.show', compact('review'));
+    }
+    public function create()
+    {
+        // 全てのカテゴリを取得
+        $categories = Category::all();
+
+        // ビューにカテゴリを渡す
+        return view('reviews.create', compact('categories'));
     }
 
-    public function create(Category $category)
+    // レビュー保存
+    public function store(Request $request)
     {
-        return view('reviews.create')->with(['categories' => $category->get()]);
-    }
-
-    public function store(Review $review, Request $request)
-    {
-        $input = $request['review'];
-        $input['user_id'] = Auth::id();
-        $review->fill($input)->save();
-        return redirect('/reviews/' . $review->id);
-    }
-
-    public function edit(Review $review, Category $category)
-    {
-        return view('reviews.edit')->with([
-            'review' => $review,
-            'categories' => $category->get()
+        $request->validate([
+            'review.title' => 'required|string|max:255',
+            'review.body' => 'required|string',
+            'review.category_id' => 'required|exists:categories,id',
         ]);
+
+        $input = $request->input('review');
+        $input['user_id'] = Auth::id();  // ログインユーザーIDをセット
+        $review = Review::create($input);
+
+        return redirect()->route('reviews.show', $review->id);
     }
 
-    public function update(Request $request, Review $review)
-    {
-        $input_review = $request['review'];
-        $review->fill($input_review)->save();
-        return redirect('/reviews/' . $review->id);
-    }
-
+    // レビュー削除
     public function delete(Review $review)
     {
+        // レビューに紐づく「いいね」を削除
         Like::where('review_id', $review->id)->delete();
         $review->delete();
-        return redirect('/');
+
+        return redirect()->route('reviews.index')->with('success', 'レビューが削除されました');
     }
 
+    // いいね機能
     public function like($id)
     {
         $alreadyLiked = Like::where('review_id', $id)
@@ -74,6 +79,7 @@ class ReviewController extends Controller
         return redirect()->back();
     }
 
+    // いいね取り消し機能
     public function unlike($id)
     {
         $like = Like::where('review_id', $id)
@@ -90,4 +96,3 @@ class ReviewController extends Controller
         return redirect()->back();
     }
 }
-
