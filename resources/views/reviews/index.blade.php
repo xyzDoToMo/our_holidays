@@ -38,10 +38,7 @@
     <div id="reviewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
         <div class="bg-white p-8 rounded-lg max-w-2xl w-full">
             <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
-            <p id="modalUserId" class="font-semibold">
-                <!-- ユーザーIDにリンクを追加 -->
-                <a href="/users/{{ $review->user_id }}" class="text-blue-500 hover:underline">ユーザーID: {{ $review->user_id }}</a>
-            </p>
+            <p id="modalUserId" class="font-semibold"></p>
             <p id="modalCategory" class="text-sm text-gray-600"></p>
             <p id="modalBody" class="mt-2"></p>
             <div class="mt-4 bg-gray-100 p-4 rounded-md">
@@ -56,13 +53,20 @@
     <script>
         function openModal(reviewId) {
             const review = {!! json_encode($reviews->keyBy('id')) !!}[reviewId];
+            
+            // モーダルに動的に内容をセット
             document.getElementById('modalTitle').textContent = review.title;
-            document.getElementById('modalUserId').textContent = 'User ID: ' + review.user_id;
             document.getElementById('modalCategory').textContent = review.category.name;
             document.getElementById('modalBody').textContent = review.body;
             document.getElementById('modalEventTitle').textContent = review.event_title;
             document.getElementById('modalEventTime').textContent = review.event_time;
             document.getElementById('modalEventBody').textContent = review.event_body;
+
+            // ユーザーIDにリンクを追加
+            const modalUserId = document.getElementById('modalUserId');
+            modalUserId.innerHTML = `<a href="/users/${review.user_id}" class="text-blue-500 hover:underline">ユーザーID: ${review.user_id}</a>`;
+
+            // モーダルを表示
             document.getElementById('reviewModal').classList.remove('hidden');
             document.getElementById('reviewModal').classList.add('flex');
         }

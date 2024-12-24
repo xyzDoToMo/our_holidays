@@ -24,6 +24,8 @@ class ReviewController extends Controller
     {
         return view('reviews.show', compact('review'));
     }
+
+    // レビュー作成画面
     public function create()
     {
         // 全てのカテゴリを取得
@@ -47,6 +49,49 @@ class ReviewController extends Controller
         $review = Review::create($input);
 
         return redirect()->route('reviews.show', $review->id);
+    }
+
+    // レビュー編集画面
+    public function edit($id)
+    {
+        // 編集するレビューを取得
+        $review = Review::findOrFail($id);
+
+        // 全てのカテゴリを取得
+        $categories = Category::all();
+
+        // ビューにデータを渡す
+        return view('reviews.edit', compact('review', 'categories'));
+    }
+
+    // レビュー更新
+    public function update(Request $request, $id)
+    {
+        // バリデーション
+        $request->validate([
+            'review.title' => 'required|string|max:255',
+            'review.body' => 'required|string',
+            'review.category_id' => 'required|exists:categories,id',
+            'review.event_title' => 'required|string',
+            'review.event_time' => 'required|string',
+            'review.event_body' => 'nullable|string',
+        ]);
+
+        // 該当するレビューを取得
+        $review = Review::findOrFail($id);
+
+        // レビューの更新
+        $review->update([
+            'title' => $request->input('review.title'),
+            'body' => $request->input('review.body'),
+            'category_id' => $request->input('review.category_id'),
+            'event_title' => $request->input('review.event_title'),
+            'event_time' => $request->input('review.event_time'),
+            'event_body' => $request->input('review.event_body'),
+        ]);
+
+        // 更新後にリダイレクト
+        return redirect()->route('reviews.show', $review->id)->with('success', 'レビューが更新されました');
     }
 
     // レビュー削除
